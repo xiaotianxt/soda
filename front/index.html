@@ -1,0 +1,277 @@
+<!--
+ * @Author: 小田
+ * @Date: 2021-05-29 14:09:12
+ * @LastEditTime: 2021-06-08 00:47:48
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, 
+  initial-scale=1.0, 
+  maximum-scale=1.0, 
+  user-scalable=no" />
+	<title>食品安全风险评估系统</title>
+	<link rel="stylesheet" href="./assets/css/style.css">
+	<link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.css" rel="stylesheet">
+	<script defer src="./node_modules/@fortawesome/fontawesome-free/js/all.js"></script>
+
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+	<link rel="stylesheet" href="./assets/css/loader.css">
+
+</head>
+
+<body>
+	<div class="loader-wrapper">
+		<span class="loader"><span class="loader-inner"></span></span>
+	</div>
+	<nav class="navbar navbar-fixed-top navbar-light bg-light" role="navigation">
+		<a class="navbar-brand" href="#">食品安全风险评估系统</a>
+		<ul class="navbar-nav list-group list-group-horizontal">
+			<li class="navbar-item"><a href="https://github.com/xiaotianxt/soda"
+					class="nav-link badge badge-light m-2">Github</a></li>
+		</ul>
+	</nav>
+	</nav>
+	<div id="map">
+	</div>
+
+	<div class="col-md-4 col-sm-6 col-xs-12 sidebar sidebar-left float-sm-left float-md-left float-lg-left"
+		id="accordion-left">
+		<div class="sidebar-body flex-sm-column d-sm-flex d-md-flex d-lg-flex">
+			<div class="sidebar-item-content card m-1" id="result-card" style="display:none">
+				<div class="card-header">
+					查询结果
+					<button class="close slide-submenu">
+						<span aria-hidden="true">
+							&times;
+						</span>
+					</button>
+				</div>
+				<div class="card-body bg-light pre-scrollable">
+					<div id="info-carousel" class="carousel slide" data-interval="false">
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								<ul class="list-group" id="search-result-panel">
+
+								</ul>
+							</div>
+							<div class="carousel-item">
+								<div class="card bg-transparent border-light p-0">
+									<div class="card-header bg-transparent border-light p-0 ">
+										<button class="btn btn-light d-flex align-items-center"
+											id="search-result-info-back">
+											<div class="fa fa-arrow-left"></div>
+											<h5 for="search-result-info-back" id="search-result-info-title"
+												class="mb-0 ml-2">
+											</h5>
+										</button>
+
+
+									</div>
+									<div class="card-body p-0">
+										<canvas id="myChart"></canvas>
+									</div>
+								</div>
+
+
+								<div id="search-result-info">
+									<div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<a class="carousel-control left d-none" id="info-prev" href="#info-carousel" data-slide="prev"> 上一个
+					</a>
+					<a class="carousel-control right d-none" id="info-next" href="#info-carousel" data-slide="next"> 上一个
+					</a>
+				</div>
+			</div>
+			<div class="sidebar-item-button ">
+				<button id="result-button" class="btn btn-default bg-light m-1">
+					<div class="fa fa-list"></div>
+				</button>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-4 col-sm-6 col-xs-12 sidebar sidebar-right float-sm-left float-md-right float-lg-right"
+		id="accordion-right">
+		<div class="sidebar-body flex-sm-column d-sm-flex d-md-flex d-lg-flex">
+			<div class="sidebar-item-content card m-1" id="xiaoqu-search-card" style="display:none">
+				<div class="card-header">
+					店铺查询
+					<button type="button" class="close slide-submenu" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div id="xiaoqu-query" class="card-body bg-light pre-scrollable">
+					<form id="xiaoqu-locate" role="xiaoqu-locate">
+						<div class="input-group ">
+							<input type="text" class="form-control" placeholder="关键词">
+							<button type="submit" class="btn btn-secondary input-group-addon" role="button">
+								搜索
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="sidebar-item-button m-1 float-sm-right float-md-right float-lg-right">
+				<button id="xiaoqu-search-button" class="btn btn-default float-right bg-light m-1">
+					<div class="fa fa-search-location"></div>
+				</button>
+			</div>
+
+			<div class="sidebar-item-content card m-1" id="advanced-search-card" style="display:none">
+				<div class="card-header">
+					高级查询
+					<button type="button" class="close slide-submenu" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="card-body bg-light pre-scrollable">
+					<form class="" id="xiaoqu-advanced-locate">
+						<div class="form-group">
+							<div class="custom-control custom-checkbox" data-toggle="collapse"
+								data-target="#polygon-edit-tools">
+								<input type="checkbox" name="polygon-checkbox" id="polygon-checkbox"
+									class="custom-control-input">
+								<label for="polygon-checkbox" class="custom-control-label">多边形编辑</label>
+							</div>
+							<div class="collapse" id="polygon-edit-tools">
+								<div class="card-body bg-transparent p-1">
+
+									<div class="btn-group mx-auto text-center d-flex polygon-control-btns" role="group"
+										aria-label="polygon-edit-tools">
+										<button class="btn btn-light" id="add-polygon">
+											<div class="fa fa-plus"></div>
+										</button>
+										<button class="btn btn-light" id="remove-polygon">
+											<div class="fa fa-minus"></div>
+										</button>
+										<button class="btn btn-light" id="edit-polygon">
+											<div class="fa fa-edit"></div>
+										</button>
+										<button class="btn btn-light" id="remove-all-polygon">
+											<div class="fa fa-trash"></div>
+										</button>
+										<button class="btn btn-light" id="finish-polygon">
+											<div class="fa fa-check"></div>
+										</button>
+									</div>
+									<small class="form-text text-muted">按照多边形内范围进行查询</small>
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="custom-control custom-checkbox" data-toggle="collapse"
+								data-target="#price-range">
+								<input type="checkbox" name="price-checkbox" id="price-checkbox"
+									class="custom-control-input">
+								<label for="price-checkbox" class="custom-control-label">评分范围</label>
+							</div>
+
+							<div class="collapse" id="price-range">
+								<div class="card-body bg-transparent p-1">
+									<div class="input-group mb-3">
+										<input type="text" class="form-control" aria-label="最低分"
+											aria-describedby="basic-addon2">
+										<div class="input-group-append">
+											<span class="input-group-text" id="basic-addon2"> - </span>
+										</div>
+										<input type="text" class="form-control" aria-label="最高分"
+											aria-describedby="basic-addon3">
+										<div class="input-group-append">
+											<span class="input-group-text" id="basic-addon3">分</span>
+										</div>
+									</div>
+									<div class="form-text text-muted">
+										<small class="form-text text-muted">
+											<span>满分10分</span>
+											<span>查询结果不包含无评分店铺</span>
+										</small>
+									</div>
+
+								</div>
+
+							</div>
+
+
+
+						</div>
+						<!-- 之前的通行时间搜索，或许可以放弃 -->
+						<div class="form-group">
+							<div class="custom-control custom-checkbox" data-toggle="collapse" data-target="#transport">
+								<input type="checkbox" name="transport-checkbox" id="transport-checkbox"
+									class="custom-control-input">
+								<label for="transport-checkbox" class="custom-control-label">通行时间</label>
+							</div>
+
+							<div class="collapse" id="transport">
+								<div class="card-body bg-transparent p-1 flex-center form-check">
+									<div class="d-flex">
+
+										<div class="btn-group btn-group-toggle input-group" data-toggle="buttons">
+											<label class="btn btn-outline-primary active">
+												<input type="radio" name="options" class="transport-type"
+													id="transport-type-walk" checked>
+												<div class="fas fa-walking"></div>
+											</label>
+											<label class="btn btn-outline-success">
+												<input type="radio" name="options" class="transport-type"
+													id="transport-type-bicycle">
+												<i class="fa fa-bicycle" aria-hidden="true"></i>
+											</label>
+											<label class="btn btn-outline-info">
+												<input type="radio" name="options" class="transport-type"
+													id="transport-type-car">
+												<i class="fa fa-car" aria-hidden="true"></i>
+											</label>
+										</div>
+									</div>
+
+									<div class="d-flex">
+
+										<div class="input-group mb-3 was-validated">
+											<div class="btn-group btn-group-toggle">
+												<label class="btn btn-outline-dark" id="transport-choose-locate">
+													<div class="fas fa-location-arrow"></div>
+												</label>
+											</div>
+											<input type="text" id="transport-time" class="form-control "
+												aria-label="通行时间" aria-describedby="transport-minite" required>
+											<div class="input-group-append">
+												<span class="input-group-text" id="transport-minite"> 分钟 </span>
+											</div>
+											<div class="invalid-feedback">请填写时间</div>
+
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group d-flex justify-content-center">
+							<button class="btn btn-secondary col-12" id="advanced-search-button">提交</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+			<div class="sidebar-item-button m-1 float-sm-right float-md-right float-lg-right">
+				<button id="advanced-search-button" class="btn btn-default float-right bg-light m-1">
+					<div class="fa fa-sliders-h"></div>
+				</button>
+			</div>
+		</div>
+	</div>
+	<script src="./assets/js/index.js"></script>
+	<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.js"></script>
+</body>
+
+</html>
