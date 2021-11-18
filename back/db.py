@@ -1,7 +1,7 @@
 '''
 Author: 小田
 Date: 2021-05-19 21:05:42
-LastEditTime: 2021-06-17 20:09:07
+LastEditTime: 2021-11-18 21:41:23
 '''
 from os import PRIO_PROCESS
 from config import CONFIG
@@ -18,8 +18,8 @@ class DBHandler():
     def __init__(self) -> None:
         DB = CONFIG.DB
         self.client = MongoClient(
-            f"mongodb://{DB['host']}:{DB['port']}/{DB['database']}", username="lianjia", password="lianjia", connect=False)
-        self._db = self.client['lianjia']
+            f"mongodb://{DB['host']}:{DB['port']}/{DB['database']}", connect=False)
+        self._db = self.client['soda']
         self.xiaoqu = self._db['xiaoqu']
         self.location = self._db['location']
         self.today = self._db['today']
@@ -40,6 +40,9 @@ class DBHandler():
         ]))
 
     def today_name(self, xiaoqu):
+        print({"properties.xiaoqu": {"$regex": f".*{xiaoqu}.*"}})
+        print(self.today.find(
+            {"properties.xiaoqu": {"$regex": f".*{xiaoqu}.*"}}))
         return self.today.find({"properties.xiaoqu": {"$regex": f".*{xiaoqu}.*"}})
 
     def today_filter(self, query):
@@ -65,8 +68,8 @@ class DBHandler():
             query_price = []
         else:
             query_price = [
-                {"properties.price": {"$gt": price_range['min']}},
-                {"properties.price": {"$lt": price_range['max']}}]
+                {"properties.price": {"$gte": price_range['min']}},
+                {"properties.price": {"$lte": price_range['max']}}]
 
         if transport is None:
             query_transport = {}

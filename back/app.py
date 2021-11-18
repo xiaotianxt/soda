@@ -1,7 +1,7 @@
 '''
 Author: 小田
 Date: 2021-05-19 15:21:48
-LastEditTime: 2021-06-17 20:06:57
+LastEditTime: 2021-11-18 20:22:20
 '''
 from flask import Flask, request
 from handler import *
@@ -12,12 +12,12 @@ app = Flask(__name__)
 handler = RequestHandler()
 
 
-@app.route("/search", methods=["GET", "POST"])
+@app.route("/search", methods=["POST"])
 @cross_origin()
 def search():
-    data = request.get_json()
+    data = json.loads(request.data.decode("utf-8"))
+    print(data)
     rq_type = data['type']
-    print("DATA: ", data)
 
     if rq_type == "xiaoqu":
         xiaoqu = data['xiaoqu']
@@ -25,8 +25,14 @@ def search():
         return handler.query_within_today_name(xiaoqu), 200, {'content-type': 'application/json'}
 
     elif rq_type == "advanced":
-        return handler.query_within_today_advanced(data['polygon'], data['price'], data['transport']), 200, {'content-type': 'application/json'}
+        returndata = handler.query_within_today_advanced(
+            data['polygon'], data['price'], data['transport'])
+        print(returndata)
+        return returndata, 200, {'content-type': 'application/json'}
 
     elif rq_type == "prices":
         xiaoqu = data['item']['xiaoqu']
         return handler.query_within_xiaoqu_name(xiaoqu), 200, {'content-type': "application/json"}
+
+
+app.run(debug=True)

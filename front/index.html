@@ -1,7 +1,7 @@
 <!--
  * @Author: 小田
  * @Date: 2021-05-29 14:09:12
- * @LastEditTime: 2021-06-08 00:47:48
+ * @LastEditTime: 2021-11-18 16:56:04
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -30,15 +30,15 @@
 	<nav class="navbar navbar-fixed-top navbar-light bg-light" role="navigation">
 		<a class="navbar-brand" href="#">食品安全风险评估系统</a>
 		<ul class="navbar-nav list-group list-group-horizontal">
-			<li class="navbar-item"><a href="https://github.com/xiaotianxt/soda"
-					class="nav-link badge badge-light m-2">Github</a></li>
+			<li class="navbar-item"><a href="https://github.com/xiaotianxt/soda" class="nav-link badge badge-light m-2"
+					target="_blank">Github</a></li>
 		</ul>
 	</nav>
 	</nav>
 	<div id="map">
 	</div>
 
-	<div class="col-md-4 col-sm-6 col-xs-12 sidebar sidebar-left float-sm-left float-md-left float-lg-left"
+	<div class="col-md-6 col-sm-6 col-xs-12 sidebar sidebar-left float-sm-left float-md-left float-lg-left"
 		id="accordion-left">
 		<div class="sidebar-body flex-sm-column d-sm-flex d-md-flex d-lg-flex">
 			<div class="sidebar-item-content card m-1" id="result-card" style="display:none">
@@ -60,19 +60,38 @@
 							</div>
 							<div class="carousel-item">
 								<div class="card bg-transparent border-light p-0">
-									<div class="card-header bg-transparent border-light p-0 ">
-										<button class="btn btn-light d-flex align-items-center"
-											id="search-result-info-back">
-											<div class="fa fa-arrow-left"></div>
-											<h5 for="search-result-info-back" id="search-result-info-title"
-												class="mb-0 ml-2">
-											</h5>
-										</button>
-
-
-									</div>
 									<div class="card-body p-0">
-										<canvas id="myChart"></canvas>
+										<div class="container justify-content-center">
+											<div class="card">
+												<button class="btn btn-light d-flex flex-row align-items-center"
+													id="search-result-info-back">
+													<div class="fa fa-arrow-left"></div>
+													<div for="search-result-info-back" id="search-result-info-title"
+														class="ml-2 align-middle">
+													</div>
+												</button>
+												<div class="rounded d-flex flex-row align-items-center ">
+													<div
+														class="pl-2 m-1 p-1 d-flex flex-column align-items-center speed rounded">
+														<h5 class="md-3 d-block char text-warning">C</h5>
+														<h5 class="text-warning">72</h5>
+													</div>
+													<div class="m-1 p-1">
+														<h5 class="heading1">食品安全评分</h5> <span>食品安全风险较高，存在隐患</span>
+													</div>
+												</div>
+												<div class="rounded d-flex flex-row align-items-center">
+													<div
+														class="pl-2 m-1 p-1 d-flex flex-column align-items-center score rounded">
+														<h5 class="md-3 d-block char text-success">A</h5>
+														<h5 class="text-success">98</h5>
+													</div>
+													<div class="m-1 p-1">
+														<h5 class="text">市面平台评分</h5> <span>XX点评、X团综合评分较高，存在刷分风险</span>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 
