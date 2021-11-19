@@ -24,8 +24,7 @@ import { transform } from "ol/proj";
 import thumbs from "../img/thumb/*.png";
 
 // server url configs
-// const url = "https://house.xiaotianxt.cn";
-const url = "http://127.0.0.1:5000"
+const url = "https://restaurant.xiaotianxt.cn";
 const search_url = url + "/search";
 
 // search results
@@ -122,13 +121,13 @@ export function insertOneItem(element, index) {
 	console.log(thumbs);
 	var $elem = $(
 		`
-		
+
               <a href="#" _id="${index}" class="list-group-item list-group-item-action flex-column align-items-start">
               <div class="row">
               <img src="${thumbs[parseInt((Math.random() * 100) % 33)]}" alt="..." class="col-3 mg-thumbnail img-fluid col-3">
               <div class="col-9">
                   <div class="d-flex w-100 justify-content-between">
-                
+
                       <h6 class="mb-1">${element.properties.xiaoqu}</h6>
                       <h6 class="text-right badge badge-primary text-nowrap">${priceFormatter(
 			element.properties.price
