@@ -24,7 +24,7 @@ import { transform } from "ol/proj";
 import thumbs from "../img/thumb/*.png";
 
 // server url configs
-const url = "http://restaurant.xiaotianxt.cn:5000";
+const url = "https://restaurant.xiaotianxt.cn";
 const search_url = url + "/search";
 
 // search results
