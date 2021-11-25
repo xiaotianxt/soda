@@ -2,6 +2,7 @@ node_modules
 .cache
 package-lock.json
 .DS_Store
+dist
 *.ini
 *.csv
 .vscode

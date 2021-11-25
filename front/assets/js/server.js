@@ -1,7 +1,7 @@
 /*
  * @Author: 小田
  * @Date: 2021-05-31 13:24:12
- * @LastEditTime: 2021-11-18 20:22:47
+ * @LastEditTime: 2021-11-19 12:29:53
  */
 
 // jQuery
@@ -24,7 +24,7 @@ import { transform } from "ol/proj";
 import thumbs from "../img/thumb/*.png";
 
 // server url configs
-const url = "https://restaurant.xiaotianxt.cn";
+const url = "http://restaurant.xiaotianxt.cn:5000";
 const search_url = url + "/search";
 
 // search results
