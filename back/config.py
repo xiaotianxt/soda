@@ -5,6 +5,7 @@ LastEditTime: 2021-06-06 23:27:12
 '''
 import configparser
 
+
 class CONFIG():
     _CONFIG = configparser.ConfigParser()
     _CONFIG.read("config.ini")

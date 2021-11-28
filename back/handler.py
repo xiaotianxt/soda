@@ -4,7 +4,7 @@ Date: 2021-05-19 21:00:00
 LastEditTime: 2021-06-17 20:08:43
 '''
 
-from db import *
+from db import DBHandler
 import json
 from bson import ObjectId
 
@@ -20,11 +20,11 @@ class RequestHandler():
     def __init__(self) -> None:
         self.db = DBHandler()
 
-    def query_within_xiaoqu_name(self, xiaoqu):
-        return json.dumps(list(self.db.xiaoqu_name(xiaoqu)), cls=JSONEncoder)
+    def query_within_res_name(self, restaurant):
+        return json.dumps(list(self.db.xiaoqu_name(restaurant)), cls=JSONEncoder)
 
-    def query_within_today_name(self, xiaoqu):
-        return json.dumps(list(self.db.today_name(xiaoqu)), cls=JSONEncoder)
+    def query_within_restaurant_name(self, restaurant):
+        return json.dumps(list(self.db.today_name(restaurant)), cls=JSONEncoder)
 
-    def query_within_today_advanced(self, coordinates, price, transport):
+    def query_within_restaurant_advanced(self, coordinates, price, transport):
         return json.dumps(list(self.db.today_advanced(coordinates, price, transport)), cls=JSONEncoder)

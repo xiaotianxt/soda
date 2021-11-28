@@ -20,36 +20,19 @@ class DBHandler():
         self.client = MongoClient(
             f"mongodb://{DB['host']}:{DB['port']}/{DB['database']}", connect=False)
         self._db = self.client['soda']
-        self.xiaoqu = self._db['xiaoqu']
-        self.location = self._db['location']
-        self.today = self._db['today']
+        self.restaurant = self._db['restaurant']
 
-    def xiaoqu_name(self, xiaoqu):
-        return (self.xiaoqu.aggregate([
-            {
-                "$match": {
-                    "xiaoqu": f"{xiaoqu}"
-                }
-            },
-            {"$group": {
-                "_id": {
-                    'price': "$price",
-                    'date': "$date"
-                }
-            }}
-        ]))
+    def res_name(self, restaurant):
+        # print({"properties.xiaoqu": {"$regex": f".*{xiaoqu}.*"}})
+        # print(self.restaurant.find(
+        #     {"properties.xiaoqu": {"$regex": f".*{xiaoqu}.*"}}))
+        return self.restaurant.find({"properties.restaurant": {"$regex": f".*{restaurant}.*"}})
 
-    def today_name(self, xiaoqu):
-        print({"properties.xiaoqu": {"$regex": f".*{xiaoqu}.*"}})
-        print(self.today.find(
-            {"properties.xiaoqu": {"$regex": f".*{xiaoqu}.*"}}))
-        return self.today.find({"properties.xiaoqu": {"$regex": f".*{xiaoqu}.*"}})
+    def res_filter(self, query):
+        # print("QUERY: ", query)
+        return self.restaurant.find(query)
 
-    def today_filter(self, query):
-        print("QUERY: ", query)
-        return self.today.find(query)
-
-    def today_advanced(self, coordinates, price_range, transport):
+    def res_advanced(self, coordinates, rating_range, transport):
 
         if coordinates is None:
             query_polygon = {}
@@ -64,12 +47,12 @@ class DBHandler():
                     }
                 },
             }
-        if price_range is None:
-            query_price = []
+        if rating_range is None:
+            query_rating = []
         else:
-            query_price = [
-                {"properties.price": {"$gte": price_range['min']}},
-                {"properties.price": {"$lte": price_range['max']}}]
+            query_rating = [
+                {"properties.rating": {"$gte": rating_range['min']}},
+                {"properties.rating": {"$lte": rating_range['max']}}]
 
         if transport is None:
             query_transport = {}
@@ -87,17 +70,4 @@ class DBHandler():
                 }
             }
         print(query_transport)
-        return self.today_filter({"$and": [query_polygon, query_transport, *query_price]})
-
-
-if __name__ == '__main__':
-
-    def result(items):
-        for item in items[:5]:
-            print(item)
-
-    db = DBHandler()
-
-    # result(db.location_geo_within(polygon))
-
-    # result(db.location_geo_near(point, max_dis=1000))
+        return self.res_filter({"$and": [query_polygon, query_transport, *query_rating]})

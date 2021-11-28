@@ -22,17 +22,10 @@ def search():
     if rq_type == "xiaoqu":
         xiaoqu = data['xiaoqu']
         logging.info("查询小区: " + xiaoqu)
-        return handler.query_within_today_name(xiaoqu), 200, {'content-type': 'application/json'}
+        return handler.query_within_restaurant_name(xiaoqu), 200, {'content-type': 'application/json'}
 
     elif rq_type == "advanced":
-        returndata = handler.query_within_today_advanced(
-            data['polygon'], data['price'], data['transport'])
+        returndata = handler.query_within_restaurant_advanced(
+            data['polygon'], data['rating'], data['transport'])
         print(returndata)
         return returndata, 200, {'content-type': 'application/json'}
-
-    elif rq_type == "prices":
-        xiaoqu = data['item']['xiaoqu']
-        return handler.query_within_xiaoqu_name(xiaoqu), 200, {'content-type': "application/json"}
-
-
-app.run(debug=True)
