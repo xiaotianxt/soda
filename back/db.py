@@ -26,7 +26,7 @@ class DBHandler():
         # print({"properties.xiaoqu": {"$regex": f".*{xiaoqu}.*"}})
         # print(self.restaurant.find(
         #     {"properties.xiaoqu": {"$regex": f".*{xiaoqu}.*"}}))
-        return self.restaurant.find({"properties.restaurant": {"$regex": f".*{restaurant}.*"}})
+        return self.restaurant.find({"properties.name": {"$regex": f".*{restaurant}.*"}})
 
     def res_filter(self, query):
         # print("QUERY: ", query)
